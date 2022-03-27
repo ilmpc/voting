@@ -6,7 +6,7 @@ contract OwnerMixin {
     address private owner;
 
     modifier onlyOwner() {
-        require(msg.sender == owner, "Caller is not owner");
+        require(msg.sender == owner, "Caller is not an owner");
         _;
     }
 
@@ -48,12 +48,12 @@ contract Voting is OwnerMixin, BalanceMixin, OnlyOnceMixin {
     address private currentWinner;
 
     modifier fromIdle() {
-        require(status == Status.idle, "Wrong status");
+        require(status == Status.idle, "Voting isn't in 'idle' state");
         _;
     }
 
     modifier fromStarted() {
-        require(status == Status.started, "Wrong status");
+        require(status == Status.started, "Voting isn't in 'started' state");
         _;
     }
 
@@ -62,13 +62,13 @@ contract Voting is OwnerMixin, BalanceMixin, OnlyOnceMixin {
     }
 
     function addCandidate(address candidate) external onlyOwner fromIdle {
-        require(votes[candidate] == 0, "Candidate has already added.");
+        require(votes[candidate] == 0, "Candidate has already added");
         votes[candidate] = 1;
         candidates.push(candidate);
     }
 
     function startVoting() external onlyOwner fromIdle {
-        require(candidates.length != 0, "No candidates");
+        require(candidates.length != 0, "Can't start without candidates");
         startTimestamp = block.timestamp;
         status = Status.started;
     }
@@ -93,8 +93,11 @@ contract Voting is OwnerMixin, BalanceMixin, OnlyOnceMixin {
             "Voting hasn't been ended"
         );
         status = Status.closed;
-        address payable winnerAddress = payable(currentWinner);
-        winnerAddress.transfer((address(this).balance / 10) * 9);
+
+        if (currentWinner != address(0)) {
+            address payable winnerAddress = payable(currentWinner);
+            winnerAddress.transfer((address(this).balance / 10) * 9);
+        }
     }
 
     function withdrawCommision(address payable to) external onlyOwner {
