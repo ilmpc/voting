@@ -38,6 +38,10 @@
     "compile": "hardhat compile",
     "test": "hardhat test",
     "deploy": "hardhat run scripts/deploy.ts",
-    "hh": "hardhat"
+    "hh": "hardhat",
+    "env": "cp -n .env.example .env"
+  },
+  "dependencies": {
+    "env-var": "^7.1.1"
   }
 }

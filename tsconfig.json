@@ -9,6 +9,6 @@
     "declaration": true,
     "baseUrl": "./"
   },
-  "include": ["./scripts", "./test", "./typechain"],
+  "include": ["./scripts", "./test", "./typechain", "./tasks"],
   "files": ["./hardhat.config.ts"]
 }
