@@ -32,16 +32,16 @@
     "solidity-coverage": "^0.7.20",
     "ts-node": "^10.7.0",
     "typechain": "^5.2.0",
-    "typescript": "^4.6.2"
+    "typescript": "^4.6.2",
+    "env-var": "^7.1.1",
+    "hardhat-laika": "^0.1.0"
   },
   "scripts": {
     "compile": "hardhat compile",
     "test": "hardhat test",
     "deploy": "hardhat run scripts/deploy.ts",
     "hh": "hardhat",
-    "env": "cp -n .env.example .env"
-  },
-  "dependencies": {
-    "env-var": "^7.1.1"
+    "env": "cp -n .env.example .env",
+    "laika": "hardhat laika-sync --contract Voting --address $(grep -Po '^CONTRACT_ADDRESS=\\K(.+)' .env)"
   }
 }

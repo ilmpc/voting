@@ -6,8 +6,8 @@ import {
   Wallet,
   Signer,
 } from "ethers";
+import { HardhatEthersHelpers } from "@nomiclabs/hardhat-ethers/types";
 import { task } from "hardhat/config";
-import { HardhatEthersHelpers } from "hardhat/types";
 
 const wait = (tx: ContractTransaction) => tx.wait();
 
